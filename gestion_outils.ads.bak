@@ -1,0 +1,25 @@
+WITH Ada.Text_IO, Ada.Float_Text_IO, Ada.Integer_Text_IO;
+use Ada.Text_IO, Ada.Float_Text_IO, Ada.Integer_Text_IO;
+
+PACKAGE Gestion_Outils IS
+   N : Integer:= 7;
+   subtype T_mot is string(1..20);
+   TYPE T_identite IS RECORD
+      Nom,Prenom: T_mot := (others => ' ');
+      rempli : boolean :=false;
+   END RECORD;
+
+   TYPE T_Registre IS ARRAY (1..N) OF T_Identite;
+
+   --Procedure Outils(tab: in out t_registre);
+
+   --PROCEDURE Identite(tab:out t_registre);
+   Function Recherche(Tab : T_Registre; Nom, Prenom : T_Mot;index : integer) RETURN Boolean;
+   PROCEDURE Enregistrement(T : IN OUT T_Registre);
+
+
+END Gestion_Outils;
+
+
+
+

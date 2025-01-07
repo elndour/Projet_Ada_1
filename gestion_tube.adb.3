@@ -1,0 +1,88 @@
+WITH Ada.Text_IO, Ada.Float_Text_IO, Ada.Integer_Text_IO,gestion_personnel,gestion_date,Gestion_Outils;
+use Ada.Text_IO, Ada.Float_Text_IO, Ada.Integer_Text_IO,gestion_personnel,gestion_date,Gestion_Outils;
+
+
+PACKAGE BODY Gestion_tube IS
+
+   PROCEDURE Enregistrer_Analyse(ech : IN OUT T_registre_prelevement;T:in out t_registre;datej: in T_date) IS
+   k,id_analyste:integer;
+   date:T_date:=datej;
+   Date_Ana:T_Date;
+   Ident : T_Identite;
+   numTub, numEch : integer;
+
+   BEGIN
+
+      -- verification de l'identite de l'analyste.
+             ident.Nom := (others => ' ');
+             ident.Prenom := (others => ' ');
+
+             Put_Line("Donner le nom de l'analyste qui a analyser le tube");
+             get_line(ident.nom,k);
+
+        Put_Line("Donner le prenom de l'analyste qui a analyser le tube");
+             get_line(ident.prenom,k);
+
+        id_analyste:=Est_Analyste_Valide(ident,T);
+
+        if id_analyste=-1 THEN
+        Put_Line("Soit c'est un preleveur, soit l'identitte n'existe pas");
+
+        ELSE
+            -- saisi de la date d'analyse.
+
+             Put_Line("Saisie de la date de l'analyse");
+             saisir_DATE(date_ana);
+             if Comparer_Date(date_ana,date) then
+                tube.analyse.Date_Analyse:=date_ana;
+
+    -- Vérifier si le tube est non analysé et non détruit  si oui marquer analyser.
+
+                if Tube.Analyser = true or else tube.detruit=true THEN
+                   put("Action Impossible, Le tube est deja analyser ou le tube à été détruit");
+
+               ELSE
+                   Put("Donner le numero echantillon");
+                   get(numEch); skip_line;
+                   put("Donner le numero de tube");
+                   get(numTub); skip_line;
+                   for i in ech'range loop
+                      IF Numech = I THEN
+                         for j in ech(i).listes_tubes'range loop
+                            if numTub = j then
+                               if ech(i).listes_tubes(j).analyser = false then
+                                  ech(i).listes_tubes(j).analyser = false
+
+
+                   Tube.Analyser := TRUE;
+                   tube.analyse.Identite_Analyste.Nom := ident.nom;
+                   tube.analyse.Identite_Analyste.Prenom := ident.prenom;
+
+-- saisi de l'identifiant analyste
+
+                   tube.analyse.Identifiant_analyste:=id_analyste; skip_line;
+
+-- incrementation du nombre d'actes pour cette analyste.
+
+                   for i in T'RANGE loop
+                      if T(i).Identifiant=id_analyste then
+                         T(I).Nbr_Act_Realiser:=T(I).Nbr_Act_Realiser+1;
+                         put(T(I).Nbr_Act_Realiser);
+                      end if;
+                   end loop;
+
+-- saisir le resultat de l'analyse;
+
+                     Put_Line("Donner le resultat de l'analyse");
+                     get_line(s,k);
+                     Tube.Analyse.Resultat:=T_resultat'value(s(1..k));
+                     Put_Line("Analyse enregistrée avec succes.");
+                end if;
+               else
+                     Put("La date n'est pas la date du jour");
+             end if;
+      end if;
+
+   END Enregistrer_Analyse;
+
+END Gestion_Tube;

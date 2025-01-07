@@ -1,0 +1,52 @@
+WITH Ada.Text_IO, Ada.Float_Text_IO, Ada.Integer_Text_IO,gestion_personnel,gestion_date,Gestion_Outils,Gestion_Analyse,Gestion_Tube;
+use Ada.Text_IO, Ada.Float_Text_IO, Ada.Integer_Text_IO,gestion_personnel,gestion_date,Gestion_Outils,Gestion_Analyse,Gestion_Tube;
+
+Package gestion_Echantillon is
+     x,y:integer:=6;
+     p:integer:=10;
+     Nbr_Max_Echantillon : Integer := ((X+Y)*P)/5;
+     Date_Du_Jour : T_date;
+    Type T_organe is (foie,reins,coeur,poumons,cerveau) ;
+    Type T_Animaux is (vaches,lapins,moutons,porcs,canards) ;
+    Type Registre_tube is array (1..5) of T_tube ;
+
+--PACKAGE Archives_echantillon IS NEW Sequential_Io(T_echantillon);
+ --USE Archives_echantillon;
+
+--PROCEDURE Archiver_echantillon(Echantillon : IN OUT T_echantillon) IS
+ --   Mon_Fichier : Archives_echantillon.File_Type;
+
+    TYPE T_echantillon IS RECORD
+        Id_echantillon : integer ;
+        Animal : T_animaux ;
+        Organe : T_organe ;
+        identite_preleveur:T_identite;
+        Id_preleveur : integer ;
+        Nbr_Tubes : integer:=0 ;
+       Listes_Tubes : Registre_Tube ;
+       date_prelevement : T_date;
+       Date_perimer : T_date;
+    END RECORD;
+    Type T_registre_Prelevement is array (1..nbr_max_echantillon) of t_echantillon;
+    TYPE Refrigerateur_type IS RECORD
+       Tube : T_Tube;
+       Nbre_Place : integer :=5;
+    END record ;
+    TYPE congelateur_type IS RECORD
+       Tube : T_Tube;
+       Nbre_Place: integer:=5;
+    END record ;
+
+    TYPE T_Refrigerateur IS ARRAY (1..5) OF Refrigerateur_type;
+    Type T_Congelateur is array (1..5) of congelateur_type;
+
+    FUNCTION Est_Preleveur_Valide(Identifiant : T_identite; T: T_Registre) RETURN integer;
+    function Places_Disponibles_R(Refri : T_Refrigerateur) return Integer;
+    function Places_Disponibles_C(congel : T_Congelateur) return Integer;
+    function Tous_Tubes_Analyses(Echantillon : T_Echantillon)  return Boolean;
+    PROCEDURE Affiche_Echantillon_V1(Tab : IN T_Registre_Prelevement);
+    procedure Verifier_Et_Detruire_Echantillons(Registre : in out T_Registre_Prelevement; Date_J: T_Date);
+    procedure Enregistrer_Prelevement(Echantillon: in out T_echantillon;T: in out T_Registre;nbr_ech_att: in out integer;dateJ:in T_date);
+    procedure Enregistrer_Tableau_Echantillons(echantillon : in out T_Registre_Prelevement;T: in out T_Registre;Nbr_Ech_Att : in out Integer;dateJ: in T_date);
+
+end gestion_Echantillon ; 
